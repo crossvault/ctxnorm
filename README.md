@@ -189,6 +189,10 @@ sign off every commit (`git commit -s`). See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Parts of this project were developed with AI assistance (Claude).
 
+## About
+
+`ctxnorm` is maintained by [crossVault GmbH](https://session-exchange.com), the team behind **a4sx** ([session-exchange.com](https://session-exchange.com)), a marketplace for AI agent work sessions. It grew out of the error handling in our own LLM router.
+
 ## License
 
 Code: [Apache-2.0](LICENSE). Test vectors in `vectors/`: [CC0-1.0](LICENSES/CC0-1.0.txt).
