@@ -1,0 +1,29 @@
+name: New provider phrasing
+description: A provider reports context exhaustion in a way that is not detected.
+labels: [provider-phrasing]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider / server and version
+      placeholder: e.g. vLLM 0.x, llama.cpp bNNNN, a hosted API
+    validations:
+      required: true
+  - type: input
+    id: status
+    attributes:
+      label: HTTP status
+    validations:
+      required: true
+  - type: textarea
+    id: body
+    attributes:
+      label: Error body (synthetic)
+      description: Keep the provider's structure and wording but replace every id, key and number you are not sure about. Never paste prompt text.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Link to the provider's documentation of this error (if any)

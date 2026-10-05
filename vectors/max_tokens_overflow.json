@@ -1,0 +1,48 @@
+{
+  "description": "Errors where prompt + requested output exceed the window but the PROMPT fits: the fix is a smaller max_tokens, never a compaction. expect: the numbers the parser must extract.",
+  "vectors": [
+    {
+      "provider": "vllm-max-tokens-too-large",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "'max_tokens' or 'max_completion_tokens' is too large: 32000. This model's maximum context length is 32768 tokens and your request has 1000 input tokens (32000 > 32768 - 1000).",
+        "type": "BadRequestError",
+        "code": 400
+      },
+      "expect": {
+        "input_tokens": 1000,
+        "completion_tokens": 32000,
+        "limit": 32768
+      }
+    },
+    {
+      "provider": "tgi-inputs-plus-max-new-tokens",
+      "status": 422,
+      "body": {
+        "error": "Input validation error: `inputs` tokens + `max_new_tokens` must be <= 4096. Given: 3000 `inputs` tokens and 2000 `max_new_tokens`",
+        "error_type": "validation"
+      },
+      "expect": {
+        "input_tokens": 3000,
+        "completion_tokens": 2000,
+        "limit": 4096
+      }
+    },
+    {
+      "provider": "openai-legacy-split",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "This model's maximum context length is 65536 tokens. However, you requested 70000 tokens (40000 in the messages, 30000 in the completion). Please reduce the length of the messages or completion.",
+          "type": "invalid_request_error"
+        }
+      },
+      "expect": {
+        "input_tokens": 40000,
+        "completion_tokens": 30000,
+        "limit": 65536
+      }
+    }
+  ]
+}

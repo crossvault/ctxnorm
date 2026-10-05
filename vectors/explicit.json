@@ -1,0 +1,280 @@
+{
+  "description": "Provider error bodies that mean 'the prompt does not fit the context window'. expect: numbers the parser must extract (null = not stated by the provider).",
+  "vectors": [
+    {
+      "provider": "openai-chat",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "This model's maximum context length is 131072 tokens. However, your messages resulted in 140000 tokens. Please reduce the length of the messages.",
+          "type": "invalid_request_error",
+          "param": "messages",
+          "code": "context_length_exceeded"
+        }
+      },
+      "expect": {
+        "input_tokens": 140000,
+        "limit": 131072
+      }
+    },
+    {
+      "provider": "openai-responses",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "Your input exceeds the context window of this model. Please adjust your input and try again.",
+          "type": "invalid_request_error",
+          "code": "context_length_exceeded"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "anthropic",
+      "status": 400,
+      "body": {
+        "type": "error",
+        "error": {
+          "type": "invalid_request_error",
+          "message": "prompt is too long: 215000 tokens > 204800 maximum"
+        }
+      },
+      "expect": {
+        "input_tokens": 215000,
+        "limit": 204800
+      }
+    },
+    {
+      "provider": "mistral",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "Prompt contains 40000 tokens and 0 draft tokens, too large for model with 32768 maximum context length",
+        "type": "invalid_request_error"
+      },
+      "expect": {
+        "input_tokens": 40000,
+        "limit": 32768
+      }
+    },
+    {
+      "provider": "vllm",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "The decoder prompt (length 140000) is longer than the maximum model length of 131072. Make sure that `max_model_len` is no smaller than the number of text tokens.",
+        "type": "BadRequestError",
+        "code": 400
+      },
+      "expect": {
+        "input_tokens": 140000,
+        "limit": 131072
+      }
+    },
+    {
+      "provider": "vllm-legacy",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "Input prompt (140000 tokens) is too long and exceeds limit of 131072"
+      },
+      "expect": {
+        "input_tokens": 140000,
+        "limit": 131072
+      }
+    },
+    {
+      "provider": "deepseek",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "This model's maximum context length is 65536 tokens. However, you requested 70000 tokens (69000 in the messages, 1000 in the completion). Please reduce the length of the messages or completion.",
+          "type": "invalid_request_error"
+        }
+      },
+      "expect": {
+        "input_tokens": 69000,
+        "limit": 65536
+      }
+    },
+    {
+      "provider": "qwen-dashscope",
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "InvalidParameter",
+          "message": "<400> InternalError.Algo.InvalidParameter: Range of input length should be [1, 129024]"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": 129024
+      }
+    },
+    {
+      "provider": "glm-zhipu",
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "1261",
+          "message": "Prompt exceeds max length"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "glm-zhipu-zh",
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "1261",
+          "message": "Prompt 超长"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "moonshot-kimi",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "Invalid request: Your request exceeded model token limit: 262144",
+          "type": "invalid_request_error"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": 262144
+      }
+    },
+    {
+      "provider": "gemini",
+      "status": 400,
+      "body": [
+        {
+          "error": {
+            "code": 400,
+            "message": "The input token count (2200000) exceeds the maximum number of tokens allowed (2097152).",
+            "status": "INVALID_ARGUMENT"
+          }
+        }
+      ],
+      "expect": {
+        "input_tokens": 2200000,
+        "limit": 2097152
+      }
+    },
+    {
+      "provider": "xai",
+      "status": 400,
+      "body": {
+        "code": "Client specified an invalid argument",
+        "error": "This model's maximum prompt length is 131072 but the request contains 140000 tokens."
+      },
+      "expect": {
+        "input_tokens": 140000,
+        "limit": 131072
+      }
+    },
+    {
+      "provider": "bedrock",
+      "status": 400,
+      "body": {
+        "message": "Input is too long for requested model."
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "llama-cpp",
+      "status": 400,
+      "body": {
+        "error": {
+          "code": 400,
+          "message": "the request exceeds the available context size, try increasing it",
+          "type": "exceed_context_size_error",
+          "n_prompt_tokens": 9000,
+          "n_ctx": 8192
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "tgi",
+      "status": 422,
+      "body": {
+        "error": "Input validation error: `inputs` must have less than 4096 tokens. Given: 5000",
+        "error_type": "validation"
+      },
+      "expect": {
+        "input_tokens": 5000,
+        "limit": 4096
+      }
+    },
+    {
+      "provider": "vllm-max-tokens-input-over-window",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "'max_tokens' or 'max_completion_tokens' is too large: 4096. This model's maximum context length is 32768 tokens and your request has 40000 input tokens (4096 > 32768 - 40000).",
+        "type": "BadRequestError",
+        "code": 400
+      },
+      "expect": {
+        "input_tokens": 40000,
+        "limit": 32768
+      }
+    },
+    {
+      "provider": "openrouter-split",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "This endpoint's maximum context length is 131072 tokens. However, you requested about 150000 tokens (140000 of text input, 10000 in the output). Please reduce the length of either one, or use the \"middle-out\" transform.",
+          "code": 400
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": 131072
+      }
+    },
+    {
+      "provider": "plain-text-413",
+      "status": 413,
+      "body": "Request too large: prompt is too long for this model",
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    },
+    {
+      "provider": "code-only-500",
+      "status": 500,
+      "body": {
+        "error": {
+          "message": "context_length_exceeded",
+          "type": "server_error"
+        }
+      },
+      "expect": {
+        "input_tokens": null,
+        "limit": null
+      }
+    }
+  ]
+}

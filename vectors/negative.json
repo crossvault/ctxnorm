@@ -1,0 +1,69 @@
+{
+  "description": "Error bodies that are NOT context exhaustion and must never be rewritten.",
+  "vectors": [
+    {
+      "case": "rate-limit",
+      "status": 429,
+      "body": {
+        "error": {
+          "message": "Rate limit reached for requests",
+          "type": "requests",
+          "code": "rate_limit_exceeded"
+        }
+      }
+    },
+    {
+      "case": "bad-param",
+      "status": 400,
+      "body": {
+        "error": {
+          "message": "Invalid value for 'tool_choice'",
+          "type": "invalid_request_error"
+        }
+      }
+    },
+    {
+      "case": "auth",
+      "status": 401,
+      "body": {
+        "error": {
+          "message": "Incorrect API key provided"
+        }
+      }
+    },
+    {
+      "case": "anthropic-max-tokens-overflow",
+      "status": 400,
+      "body": {
+        "type": "error",
+        "error": {
+          "type": "invalid_request_error",
+          "message": "input length and `max_tokens` exceed context limit: 190000 + 32000 > 200000, decrease input length or `max_tokens` and try again"
+        }
+      }
+    },
+    {
+      "case": "not-an-error-status",
+      "status": 200,
+      "body": {
+        "error": {
+          "message": "prompt is too long: 5 tokens > 4 maximum"
+        }
+      }
+    },
+    {
+      "case": "not-json",
+      "status": 400,
+      "body": "not json at all"
+    },
+    {
+      "case": "vllm-max-tokens-too-large-without-input",
+      "status": 400,
+      "body": {
+        "object": "error",
+        "message": "'max_tokens' is too large: 99999999. This model's maximum context length is 32768 tokens.",
+        "type": "BadRequestError"
+      }
+    }
+  ]
+}

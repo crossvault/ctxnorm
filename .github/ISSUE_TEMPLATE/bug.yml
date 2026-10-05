@@ -1,0 +1,24 @@
+name: Bug report
+description: Something is detected wrongly, or a legitimate answer was changed.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Code or a request/response pair. Use SYNTHETIC data only, never real keys, prompts or account ids.
+      render: python
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and Python version
+    validations:
+      required: true
